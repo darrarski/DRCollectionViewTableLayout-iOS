@@ -16,6 +16,7 @@
 		312667C4191C2FA9005AB8D3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 312667C3191C2FA9005AB8D3 /* Images.xcassets */; };
 		312667E5191C3108005AB8D3 /* DRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 312667E4191C3108005AB8D3 /* DRViewController.m */; };
 		312667E8191C3170005AB8D3 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 312667E7191C3170005AB8D3 /* Storyboard.storyboard */; };
+		312667EC191C3675005AB8D3 /* DRCollectionViewTableLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 312667EB191C3675005AB8D3 /* DRCollectionViewTableLayout.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,8 @@
 		312667E3191C3108005AB8D3 /* DRViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DRViewController.h; sourceTree = "<group>"; };
 		312667E4191C3108005AB8D3 /* DRViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DRViewController.m; sourceTree = "<group>"; };
 		312667E7191C3170005AB8D3 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
+		312667EA191C3675005AB8D3 /* DRCollectionViewTableLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DRCollectionViewTableLayout.h; sourceTree = "<group>"; };
+		312667EB191C3675005AB8D3 /* DRCollectionViewTableLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DRCollectionViewTableLayout.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +142,8 @@
 		312667E9191C3231005AB8D3 /* DRCollectionViewTableLayout */ = {
 			isa = PBXGroup;
 			children = (
+				312667EA191C3675005AB8D3 /* DRCollectionViewTableLayout.h */,
+				312667EB191C3675005AB8D3 /* DRCollectionViewTableLayout.m */,
 			);
 			name = DRCollectionViewTableLayout;
 			path = ../DRCollectionViewTableLayout;
@@ -212,6 +217,7 @@
 				312667C2191C2FA9005AB8D3 /* DRAppDelegate.m in Sources */,
 				312667E5191C3108005AB8D3 /* DRViewController.m in Sources */,
 				312667BE191C2FA9005AB8D3 /* main.m in Sources */,
+				312667EC191C3675005AB8D3 /* DRCollectionViewTableLayout.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
