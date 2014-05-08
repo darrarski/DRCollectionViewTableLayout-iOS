@@ -35,14 +35,17 @@ static NSString *CollectionViewCellIdentifier = @"Cell";
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-	return 1;
+	return 2;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
 	if (section == 0) {
-		return 100;
+		return 25;
 	}
+    else if (section == 1) {
+        return 16;
+    }
 	
 	return 0;
 }
@@ -68,11 +71,13 @@ static NSString *CollectionViewCellIdentifier = @"Cell";
 															   0.f,
                                                                [self collectionView:collectionView
                                                                         tableLayout:(DRCollectionViewTableLayout *)collectionView.collectionViewLayout
-                                                                     widthForColumn:[(DRCollectionViewTableLayout *)collectionView.collectionViewLayout columnNumberForIndexPath:indexPath]],
+                                                                     widthForColumn:[(DRCollectionViewTableLayout *)collectionView.collectionViewLayout columnNumberForIndexPath:indexPath]
+                                                                          inSection:indexPath.section],
                                                                [self collectionView:collectionView
                                                                         tableLayout:(DRCollectionViewTableLayout *)collectionView.collectionViewLayout
-                                                                     heightForRow:[(DRCollectionViewTableLayout *)collectionView.collectionViewLayout rowNumberForIndexPath:indexPath]])];
-	label.text = [NSString stringWithFormat:@"%ld", (long)indexPath.row];
+                                                                       heightForRow:[(DRCollectionViewTableLayout *)collectionView.collectionViewLayout rowNumberForIndexPath:indexPath]
+                                                                          inSection:indexPath.section])];
+	label.text = [NSString stringWithFormat:@"%ld.%ld", (long)indexPath.section,  (long)indexPath.row];
 	label.textAlignment = NSTextAlignmentCenter;
 	[cell.contentView addSubview:label];
 	
@@ -81,17 +86,24 @@ static NSString *CollectionViewCellIdentifier = @"Cell";
 
 #pragma mark - DRCollectionViewDelegateTableLayout
 
-- (NSUInteger)collectionView:(UICollectionView *)collectionView numberOfColumnsPerRowForTableLayout:(DRCollectionViewTableLayout *)collectionViewLayout
+- (NSUInteger)collectionView:(UICollectionView *)collectionView tableLayout:(DRCollectionViewTableLayout *)collectionViewLayout numberOfColumnsPerRowInSection:(NSUInteger)section
 {
-    return 10;
+    if (section == 0) {
+        return 5;
+    }
+    else if (section == 1) {
+        return 4;
+    }
+    
+    return 0;
 }
 
-- (CGFloat)collectionView:(UICollectionView *)collectionView tableLayout:(DRCollectionViewTableLayout *)collectionViewLayout widthForColumn:(NSUInteger)column
+- (CGFloat)collectionView:(UICollectionView *)collectionView tableLayout:(DRCollectionViewTableLayout *)collectionViewLayout widthForColumn:(NSUInteger)column inSection:(NSUInteger)section
 {
     return 50.f + column * 10.f;
 }
 
-- (CGFloat)collectionView:(UICollectionView *)collectionView tableLayout:(DRCollectionViewTableLayout *)collectionViewLayout heightForRow:(NSUInteger)row
+- (CGFloat)collectionView:(UICollectionView *)collectionView tableLayout:(DRCollectionViewTableLayout *)collectionViewLayout heightForRow:(NSUInteger)row inSection:(NSUInteger)section
 {
     return 50.f + row * 10.f;
 }
