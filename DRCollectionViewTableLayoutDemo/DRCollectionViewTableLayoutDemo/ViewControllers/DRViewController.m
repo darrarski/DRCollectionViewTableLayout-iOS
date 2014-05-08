@@ -62,24 +62,19 @@ static NSString *CollectionViewCellIdentifier = @"Cell";
 													   green:randomFloat(.2f, .75f)
 														blue:randomFloat(.2f, .75f)
 													   alpha:1];
-	
-	[[cell.contentView subviews] enumerateObjectsUsingBlock:^(UIView *subview, NSUInteger idx, BOOL *stop) {
-		[subview removeFromSuperview];
-	}];
-	
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0.f,
-															   0.f,
-                                                               [self collectionView:collectionView
-                                                                        tableLayout:(DRCollectionViewTableLayout *)collectionView.collectionViewLayout
-                                                                     widthForColumn:[(DRCollectionViewTableLayout *)collectionView.collectionViewLayout columnNumberForIndexPath:indexPath]
-                                                                          inSection:indexPath.section],
-                                                               [self collectionView:collectionView
-                                                                        tableLayout:(DRCollectionViewTableLayout *)collectionView.collectionViewLayout
-                                                                       heightForRow:[(DRCollectionViewTableLayout *)collectionView.collectionViewLayout rowNumberForIndexPath:indexPath]
-                                                                          inSection:indexPath.section])];
+    
+    UILabel *label = [[[cell.contentView subviews] filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(UIView *subview, NSDictionary *bindings) {
+        return ([subview isKindOfClass:[UILabel class]]);
+    }]] firstObject];
+    
+    if (!label) {
+        label = [[UILabel alloc] initWithFrame:cell.bounds];
+        label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        label.textAlignment = NSTextAlignmentCenter;
+        [cell.contentView addSubview:label];
+    }
+    
 	label.text = [NSString stringWithFormat:@"%ld.%ld", (long)indexPath.section,  (long)indexPath.row];
-	label.textAlignment = NSTextAlignmentCenter;
-	[cell.contentView addSubview:label];
 	
 	return cell;
 }
