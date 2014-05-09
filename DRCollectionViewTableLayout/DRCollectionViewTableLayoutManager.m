@@ -14,7 +14,8 @@
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return [self.delegate collectionViewTableLayoutManager:self numberOfSectionsInCollectionView:collectionView];
+    return [self.delegate collectionViewTableLayoutManager:self
+                          numberOfSectionsInCollectionView:collectionView];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section

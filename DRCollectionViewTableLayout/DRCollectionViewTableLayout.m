@@ -30,12 +30,16 @@
 
 - (NSUInteger)columnNumberForIndexPath:(NSIndexPath *)indexPath
 {
-	return (indexPath.row % [self.delegate collectionView:self.collectionView tableLayout:self numberOfColumnsInSection:indexPath.section]);
+	return (indexPath.row % [self.delegate collectionView:self.collectionView
+                                              tableLayout:self
+                                 numberOfColumnsInSection:indexPath.section]);
 }
 
 - (NSUInteger)rowNumberForIndexPath:(NSIndexPath *)indexPath
 {
-	return floorf((float)indexPath.row / (float)[self.delegate collectionView:self.collectionView tableLayout:self numberOfColumnsInSection:indexPath.section]);
+	return floorf((float)indexPath.row / (float)[self.delegate collectionView:self.collectionView
+                                                                  tableLayout:self
+                                                     numberOfColumnsInSection:indexPath.section]);
 }
 
 #pragma mark - Layout methods
@@ -61,9 +65,11 @@
         NSMutableArray *layoutAttributes = [NSMutableArray new];
         NSUInteger numberOfSections = [self.collectionView.dataSource numberOfSectionsInCollectionView:self.collectionView];
         for (NSUInteger sectionIdx = 0; sectionIdx < numberOfSections; sectionIdx++) {
-            NSUInteger numberOfItemsInSection = [self.collectionView.dataSource collectionView:self.collectionView numberOfItemsInSection:sectionIdx];
+            NSUInteger numberOfItemsInSection = [self.collectionView.dataSource collectionView:self.collectionView
+                                                                        numberOfItemsInSection:sectionIdx];
             for (NSUInteger itemIdx = 0; itemIdx < numberOfItemsInSection; itemIdx++) {
-                [layoutAttributes addObject:[self layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:itemIdx inSection:sectionIdx]]];
+                [layoutAttributes addObject:[self layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:itemIdx
+                                                                                                         inSection:sectionIdx]]];
             }
         }
         _layoutAttributes = [NSArray arrayWithArray:layoutAttributes];
@@ -81,26 +87,42 @@
 	UICollectionViewLayoutAttributes *currentItemAttributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
     
     NSUInteger currentColumn = [self columnNumberForIndexPath:indexPath];
-    CGFloat width = [self.delegate collectionView:self.collectionView tableLayout:self widthForColumn:currentColumn inSection:indexPath.section];
+    CGFloat width = [self.delegate collectionView:self.collectionView
+                                      tableLayout:self
+                                   widthForColumn:currentColumn
+                                        inSection:indexPath.section];
 	CGFloat x = 0;
 	for (NSUInteger columnIdx = 0; columnIdx < currentColumn; columnIdx++) {
-		x += [self.delegate collectionView:self.collectionView tableLayout:self widthForColumn:columnIdx inSection:indexPath.section];
+		x += [self.delegate collectionView:self.collectionView
+                               tableLayout:self
+                            widthForColumn:columnIdx
+                                 inSection:indexPath.section];
 	}
 	x += (self.horizontalSpacing / 2.f) * currentColumn;
     
     NSUInteger currentRow = [self rowNumberForIndexPath:indexPath];
-    CGFloat height = [self.delegate collectionView:self.collectionView tableLayout:self heightForRow:currentRow inSection:indexPath.section];
+    CGFloat height = [self.delegate collectionView:self.collectionView
+                                       tableLayout:self
+                                      heightForRow:currentRow
+                                         inSection:indexPath.section];
     CGFloat y = 0;
     for (NSUInteger sectionIdx = 0; sectionIdx < indexPath.section; sectionIdx++) {
-        NSUInteger numberOfRowsInSection = [self rowNumberForIndexPath:[NSIndexPath indexPathForItem:[self.collectionView.dataSource collectionView:self.collectionView numberOfItemsInSection:sectionIdx]
+        NSUInteger numberOfRowsInSection = [self rowNumberForIndexPath:[NSIndexPath indexPathForItem:[self.collectionView.dataSource collectionView:self.collectionView
+                                                                                                                             numberOfItemsInSection:sectionIdx]
                                                                                            inSection:sectionIdx]];
         for (NSUInteger rowIdx = 0; rowIdx < numberOfRowsInSection; rowIdx++) {
-            y += [self.delegate collectionView:self.collectionView tableLayout:self heightForRow:rowIdx inSection:sectionIdx];
+            y += [self.delegate collectionView:self.collectionView
+                                   tableLayout:self
+                                  heightForRow:rowIdx
+                                     inSection:sectionIdx];
         }
         y += (self.verticalSpacing / 2.f) * numberOfRowsInSection;
     }
     for (NSUInteger rowIdx = 0; rowIdx < currentRow; rowIdx++) {
-        y += [self.delegate collectionView:self.collectionView tableLayout:self heightForRow:rowIdx inSection:indexPath.section];
+        y += [self.delegate collectionView:self.collectionView
+                               tableLayout:self
+                              heightForRow:rowIdx
+                                 inSection:indexPath.section];
     }
     y += (self.verticalSpacing / 2.f) * currentRow;
 	
