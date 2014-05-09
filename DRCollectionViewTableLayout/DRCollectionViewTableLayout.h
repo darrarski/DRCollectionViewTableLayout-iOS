@@ -82,6 +82,28 @@ static NSString * const DRCollectionViewTableLayoutSupplementaryViewRowHeader = 
  */
 - (CGFloat)collectionView:(UICollectionView *)collectionView tableLayout:(DRCollectionViewTableLayout *)collectionViewLayout heightForColumnHeaderInSection:(NSUInteger)section;
 
+/**
+ *  Return YES if column headers in given section should stick to top edge
+ *
+ *  @param collectionView       Collection View
+ *  @param collectionViewLayout Collection View Layout
+ *  @param section              Collection View section
+ *
+ *  @return Boolean value
+ */
+- (BOOL)collectionView:(UICollectionView *)collectionView tableLayout:(DRCollectionViewTableLayout *)collectionViewLayout stickyColumnHeadersForSection:(NSUInteger)section;
+
+/**
+ *  Return YES if row headers in given section should stick to left edge
+ *
+ *  @param collectionView       Collection View
+ *  @param collectionViewLayout Collection View Layout
+ *  @param section              Collection View section
+ *
+ *  @return Boolean value
+ */
+- (BOOL)collectionView:(UICollectionView *)collectionView tableLayout:(DRCollectionViewTableLayout *)collectionViewLayout stickyRowHeadersForSection:(NSUInteger)section;
+
 @end
 
 /**

@@ -329,29 +329,31 @@
         }
         
         // stick column header to top edge
-        CGFloat maxY = 0;
-        for (NSUInteger sectionIdx = 0; sectionIdx <= indexPath.section; sectionIdx++) {
-            CGFloat headerHeight = [self.delegate collectionView:self.collectionView
-                                                     tableLayout:self
-                                  heightForColumnHeaderInSection:sectionIdx];
-            if (headerHeight > 0) {
-                maxY += headerHeight + (self.verticalSpacing / 2.f);
+        if ([self.delegate collectionView:self.collectionView tableLayout:self stickyColumnHeadersForSection:indexPath.section]) {
+            CGFloat maxY = 0;
+            for (NSUInteger sectionIdx = 0; sectionIdx <= indexPath.section; sectionIdx++) {
+                CGFloat headerHeight = [self.delegate collectionView:self.collectionView
+                                                         tableLayout:self
+                                      heightForColumnHeaderInSection:sectionIdx];
+                if (headerHeight > 0) {
+                    maxY += headerHeight + (self.verticalSpacing / 2.f);
+                }
+                
+                NSUInteger lastRowIdx = [self rowNumberForIndexPath:[NSIndexPath indexPathForItem:[self.collectionView.dataSource collectionView:self.collectionView
+                                                                                                                          numberOfItemsInSection:sectionIdx]
+                                                                                        inSection:sectionIdx]];
+                for (NSUInteger rowIdx = 0; rowIdx < lastRowIdx; rowIdx++) {
+                    maxY += [self.delegate collectionView:self.collectionView
+                                              tableLayout:self
+                                             heightForRow:rowIdx
+                                                inSection:sectionIdx];
+                    maxY += self.verticalSpacing / 2.f;
+                }
             }
-            
-            NSUInteger lastRowIdx = [self rowNumberForIndexPath:[NSIndexPath indexPathForItem:[self.collectionView.dataSource collectionView:self.collectionView
-                                                                                                                      numberOfItemsInSection:sectionIdx]
-                                                                                    inSection:sectionIdx]];
-            for (NSUInteger rowIdx = 0; rowIdx < lastRowIdx; rowIdx++) {
-                maxY += [self.delegate collectionView:self.collectionView
-                                          tableLayout:self
-                                         heightForRow:rowIdx
-                                            inSection:sectionIdx];
-                maxY += self.verticalSpacing / 2.f;
+            maxY -= height + (self.verticalSpacing / 2.f);
+            if (y < self.collectionView.contentOffset.y) {
+                y = MIN(maxY, CGRectGetMinY(self.collectionView.bounds) + self.collectionView.contentInset.top);
             }
-        }
-        maxY -= height + (self.verticalSpacing / 2.f);
-        if (y < self.collectionView.contentOffset.y) {
-            y = MIN(maxY, CGRectGetMinY(self.collectionView.bounds) + self.collectionView.contentInset.top);
         }
         
         // set attributes frame and zIndex
@@ -360,8 +362,13 @@
     }
     else if ([kind isEqualToString:DRCollectionViewTableLayoutSupplementaryViewRowHeader]) {
         
-        // x positon - stick to left edge
-        CGFloat x = CGRectGetMinX(self.collectionView.bounds) + self.collectionView.contentInset.left;
+        // x positon
+        CGFloat x = 0;
+        
+        // stick header to left edge
+        if ([self.delegate collectionView:self.collectionView tableLayout:self stickyRowHeadersForSection:indexPath.section]) {
+            x = CGRectGetMinX(self.collectionView.bounds) + self.collectionView.contentInset.left;
+        }
         
         // compute y position
         CGFloat y = 0;

@@ -156,6 +156,32 @@
                              collectionView:(UICollectionView *)collectionView
              heightForColumnHeaderInSection:(NSUInteger)section;
 
+/**
+ *  Return YES if row headers in given section should stick to left edge
+ *
+ *  @param manager        Collection View Table Layout Manager
+ *  @param collectionView Collection View
+ *  @param section        Collection View section
+ *
+ *  @return Boolean value
+ */
+- (BOOL)collectionViewTableLayoutManager:(DRCollectionViewTableLayoutManager *)manager
+                          collectionView:(UICollectionView *)collectionView
+              stickyRowHeadersForSection:(NSUInteger)section;
+
+/**
+ *  Return YES if column headers in given section should stick to top edge
+ *
+ *  @param manager        Collection View Table Layout Manager
+ *  @param collectionView Collection View
+ *  @param section        Collection View section
+ *
+ *  @return Boolean value
+ */
+- (BOOL)collectionViewTableLayoutManager:(DRCollectionViewTableLayoutManager *)manager
+                          collectionView:(UICollectionView *)collectionView
+           stickyColumnHeadersForSection:(NSUInteger)section;
+
 @end
 
 /**

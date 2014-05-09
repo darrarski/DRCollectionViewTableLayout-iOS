@@ -232,4 +232,14 @@ static NSString * const CollectionViewHeaderIdentifier = @"Header";
     return view;
 }
 
+- (BOOL)collectionViewTableLayoutManager:(DRCollectionViewTableLayoutManager *)manager collectionView:(UICollectionView *)collectionView stickyColumnHeadersForSection:(NSUInteger)section
+{
+    return YES;
+}
+
+- (BOOL)collectionViewTableLayoutManager:(DRCollectionViewTableLayoutManager *)manager collectionView:(UICollectionView *)collectionView stickyRowHeadersForSection:(NSUInteger)section
+{
+    return YES;
+}
+
 @end

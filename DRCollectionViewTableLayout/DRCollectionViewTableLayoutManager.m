@@ -135,4 +135,18 @@
                             heightForColumnHeaderInSection:section];
 }
 
+- (BOOL)collectionView:(UICollectionView *)collectionView tableLayout:(DRCollectionViewTableLayout *)collectionViewLayout stickyRowHeadersForSection:(NSUInteger)section
+{
+    return [self.delegate collectionViewTableLayoutManager:self
+                                            collectionView:collectionView
+                                stickyRowHeadersForSection:section];
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView tableLayout:(DRCollectionViewTableLayout *)collectionViewLayout stickyColumnHeadersForSection:(NSUInteger)section
+{
+    return [self.delegate collectionViewTableLayoutManager:self
+                                            collectionView:collectionView
+                             stickyColumnHeadersForSection:section];
+}
+
 @end
