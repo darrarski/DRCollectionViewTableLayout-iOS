@@ -17,6 +17,7 @@
 		312667E5191C3108005AB8D3 /* DRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 312667E4191C3108005AB8D3 /* DRViewController.m */; };
 		312667E8191C3170005AB8D3 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 312667E7191C3170005AB8D3 /* Storyboard.storyboard */; };
 		312667EC191C3675005AB8D3 /* DRCollectionViewTableLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 312667EB191C3675005AB8D3 /* DRCollectionViewTableLayout.m */; };
+		312667EF191C4F83005AB8D3 /* DRCollectionViewTableLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 312667EE191C4F83005AB8D3 /* DRCollectionViewTableLayoutManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,8 @@
 		312667E7191C3170005AB8D3 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		312667EA191C3675005AB8D3 /* DRCollectionViewTableLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DRCollectionViewTableLayout.h; sourceTree = "<group>"; };
 		312667EB191C3675005AB8D3 /* DRCollectionViewTableLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DRCollectionViewTableLayout.m; sourceTree = "<group>"; };
+		312667ED191C4F83005AB8D3 /* DRCollectionViewTableLayoutManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DRCollectionViewTableLayoutManager.h; sourceTree = "<group>"; };
+		312667EE191C4F83005AB8D3 /* DRCollectionViewTableLayoutManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DRCollectionViewTableLayoutManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +147,8 @@
 			children = (
 				312667EA191C3675005AB8D3 /* DRCollectionViewTableLayout.h */,
 				312667EB191C3675005AB8D3 /* DRCollectionViewTableLayout.m */,
+				312667ED191C4F83005AB8D3 /* DRCollectionViewTableLayoutManager.h */,
+				312667EE191C4F83005AB8D3 /* DRCollectionViewTableLayoutManager.m */,
 			);
 			name = DRCollectionViewTableLayout;
 			path = ../DRCollectionViewTableLayout;
@@ -218,6 +223,7 @@
 				312667E5191C3108005AB8D3 /* DRViewController.m in Sources */,
 				312667BE191C2FA9005AB8D3 /* main.m in Sources */,
 				312667EC191C3675005AB8D3 /* DRCollectionViewTableLayout.m in Sources */,
+				312667EF191C4F83005AB8D3 /* DRCollectionViewTableLayoutManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
