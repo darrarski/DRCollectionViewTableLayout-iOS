@@ -42,6 +42,44 @@
     return self;
 }
 
+- (BOOL)stickyColumnHeadersInSection:(NSUInteger)section
+{
+    if ([self.delegate respondsToSelector:@selector(collectionView:tableLayout:stickyColumnHeadersForSection:)]) {
+        return [self.delegate collectionView:self.collectionView tableLayout:self stickyColumnHeadersForSection:section];
+    }
+    else {
+        return NO;
+    }
+}
+
+- (BOOL)stickyRowHeadersInSection:(NSUInteger)section
+{
+    if ([self.delegate respondsToSelector:@selector(collectionView:tableLayout:stickyRowHeadersForSection:)]) {
+        return [self.delegate collectionView:self.collectionView tableLayout:self stickyRowHeadersForSection:section];
+    }
+    else {
+        return NO;
+    }
+}
+
+- (CGFloat)widthForRowHeaderInSection:(NSUInteger)section
+{
+    if ([self.delegate respondsToSelector:@selector(collectionView:tableLayout:widthForRowHeaderInSection:)]) {
+        return [self.delegate collectionView:self.collectionView tableLayout:self widthForRowHeaderInSection:section];
+    }
+    
+    return 0.f;
+}
+
+- (CGFloat)heightForColumnHeaderInSection:(NSUInteger)section
+{
+    if ([self.delegate respondsToSelector:@selector(collectionView:tableLayout:heightForColumnHeaderInSection:)]) {
+        return [self.delegate collectionView:self.collectionView tableLayout:self heightForColumnHeaderInSection:section];
+    }
+    
+    return 0.f;
+}
+
 #pragma mark - Public methods
 
 - (NSUInteger)columnNumberForIndexPath:(NSIndexPath *)indexPath
@@ -116,8 +154,8 @@
     BOOL stickyColumnHeaders = NO;
     BOOL stickyRowHeaders = NO;
     for (NSUInteger sectionIdx = 0; sectionIdx < sectionsCount; sectionIdx++) {
-        stickyColumnHeaders = [self.delegate collectionView:self.collectionView tableLayout:self stickyColumnHeadersForSection:sectionIdx];
-        stickyRowHeaders = [self.delegate collectionView:self.collectionView tableLayout:self stickyRowHeadersForSection:sectionIdx];
+        stickyColumnHeaders = [self stickyColumnHeadersInSection:sectionIdx];
+        stickyRowHeaders = [self stickyRowHeadersInSection:sectionIdx];
         if (stickyColumnHeaders || stickyRowHeaders) {
             break;
         }
@@ -176,21 +214,29 @@
             NSMutableArray *layoutAttributes = [NSMutableArray new];
             NSUInteger sectionsCount = [self.collectionView.dataSource numberOfSectionsInCollectionView:self.collectionView];
             for (NSUInteger sectionIdx = 0; sectionIdx < sectionsCount; sectionIdx++) {
+                
                 NSUInteger columnsCount = [self.delegate collectionView:self.collectionView
                                                             tableLayout:self
                                                numberOfColumnsInSection:sectionIdx];
-                for (NSUInteger columnIdx = 0; columnIdx < columnsCount; columnIdx++) {
-                    [layoutAttributes addObject:[self layoutAttributesForSupplementaryViewOfKind:DRCollectionViewTableLayoutSupplementaryViewColumnHeader
-                                                                                     atIndexPath:[NSIndexPath indexPathForItem:columnIdx
-                                                                                                                     inSection:sectionIdx]]];
+                
+                
+                if ([self heightForColumnHeaderInSection:sectionIdx] > 0) {
+                    for (NSUInteger columnIdx = 0; columnIdx < columnsCount; columnIdx++) {
+                        [layoutAttributes addObject:[self layoutAttributesForSupplementaryViewOfKind:DRCollectionViewTableLayoutSupplementaryViewColumnHeader
+                                                                                         atIndexPath:[NSIndexPath indexPathForItem:columnIdx
+                                                                                                                         inSection:sectionIdx]]];
+                    }
                 }
-                NSUInteger itemsCount = [self.collectionView.dataSource collectionView:self.collectionView
-                                                                numberOfItemsInSection:sectionIdx];
-                NSUInteger rowsCount = ceilf((float)itemsCount / (float)columnsCount);
-                for (NSUInteger rowIdx = 0; rowIdx < rowsCount; rowIdx++) {
-                    [layoutAttributes addObject:[self layoutAttributesForSupplementaryViewOfKind:DRCollectionViewTableLayoutSupplementaryViewRowHeader
-                                                                                     atIndexPath:[NSIndexPath indexPathForItem:columnsCount + rowIdx
-                                                                                                                     inSection:sectionIdx]]];
+                
+                if ([self widthForRowHeaderInSection:sectionIdx] > 0) {
+                    NSUInteger itemsCount = [self.collectionView.dataSource collectionView:self.collectionView
+                                                                    numberOfItemsInSection:sectionIdx];
+                    NSUInteger rowsCount = ceilf((float)itemsCount / (float)columnsCount);
+                    for (NSUInteger rowIdx = 0; rowIdx < rowsCount; rowIdx++) {
+                        [layoutAttributes addObject:[self layoutAttributesForSupplementaryViewOfKind:DRCollectionViewTableLayoutSupplementaryViewRowHeader
+                                                                                         atIndexPath:[NSIndexPath indexPathForItem:columnsCount + rowIdx
+                                                                                                                         inSection:sectionIdx]]];
+                    }
                 }
             }
             _layoutAttributesForSupplementaryViews = [NSArray arrayWithArray:layoutAttributes];
@@ -224,9 +270,7 @@
     
     // compute x position
     CGFloat x = 0;
-    CGFloat rowHeaderWidth = [self.delegate collectionView:self.collectionView
-                                               tableLayout:self
-                                widthForRowHeaderInSection:indexPath.section];
+    CGFloat rowHeaderWidth = [self widthForRowHeaderInSection:indexPath.section];
     if (rowHeaderWidth > 0) {
         x += rowHeaderWidth + (self.horizontalSpacing / 2.f);
     }
@@ -241,9 +285,7 @@
     // compute y position
     CGFloat y = 0;
     for (NSUInteger sectionIdx = 0; sectionIdx <= indexPath.section; sectionIdx++) {
-        CGFloat headerHeight = [self.delegate collectionView:self.collectionView
-                                                 tableLayout:self
-                              heightForColumnHeaderInSection:sectionIdx];
+        CGFloat headerHeight = [self heightForColumnHeaderInSection:sectionIdx];
         if (headerHeight > 0) {
             y += headerHeight + (self.verticalSpacing / 2.f);
         }
@@ -311,15 +353,11 @@
                                             inSection:indexPath.section];
         
         // compute height
-        CGFloat height = [self.delegate collectionView:self.collectionView
-                                           tableLayout:self
-                        heightForColumnHeaderInSection:indexPath.section];
+        CGFloat height = [self heightForColumnHeaderInSection:indexPath.section];
         
         // compute x position
         CGFloat x = 0;
-        CGFloat rowHeaderWidth = [self.delegate collectionView:self.collectionView
-                                                   tableLayout:self
-                                    widthForRowHeaderInSection:indexPath.section];
+        CGFloat rowHeaderWidth = [self widthForRowHeaderInSection:indexPath.section];
         if (rowHeaderWidth > 0) {
             x += rowHeaderWidth + (self.horizontalSpacing / 2.f);
         }
@@ -334,7 +372,7 @@
         // compute y position
         CGFloat y = 0;
         for (NSUInteger sectionIdx = 0; sectionIdx < indexPath.section; sectionIdx++) {
-            y += [self.delegate collectionView:self.collectionView tableLayout:self heightForColumnHeaderInSection:sectionIdx];
+            y += [self heightForColumnHeaderInSection:sectionIdx];
             y += self.verticalSpacing / 2.f;
             
             NSUInteger lastRowIdx = [self rowNumberForIndexPath:[NSIndexPath indexPathForItem:[self.collectionView.dataSource collectionView:self.collectionView
@@ -350,12 +388,10 @@
         }
         
         // stick column header to top edge
-        if ([self.delegate collectionView:self.collectionView tableLayout:self stickyColumnHeadersForSection:indexPath.section]) {
+        if ([self stickyColumnHeadersInSection:indexPath.section]) {
             CGFloat maxY = 0;
             for (NSUInteger sectionIdx = 0; sectionIdx <= indexPath.section; sectionIdx++) {
-                CGFloat headerHeight = [self.delegate collectionView:self.collectionView
-                                                         tableLayout:self
-                                      heightForColumnHeaderInSection:sectionIdx];
+                CGFloat headerHeight = [self heightForColumnHeaderInSection:sectionIdx];
                 if (headerHeight > 0) {
                     maxY += headerHeight + (self.verticalSpacing / 2.f);
                 }
@@ -387,16 +423,14 @@
         CGFloat x = 0;
         
         // stick header to left edge
-        if ([self.delegate collectionView:self.collectionView tableLayout:self stickyRowHeadersForSection:indexPath.section]) {
+        if ([self stickyRowHeadersInSection:indexPath.section]) {
             x = CGRectGetMinX(self.collectionView.bounds) + self.collectionView.contentInset.left;
         }
         
         // compute y position
         CGFloat y = 0;
         for (NSUInteger sectionIdx = 0; sectionIdx <= indexPath.section; sectionIdx++) {
-            CGFloat headerHeight = [self.delegate collectionView:self.collectionView
-                                                     tableLayout:self
-                                  heightForColumnHeaderInSection:sectionIdx];
+            CGFloat headerHeight = [self heightForColumnHeaderInSection:sectionIdx];
             if (headerHeight > 0) {
                 y += headerHeight + (self.verticalSpacing / 2.f);
             }
@@ -420,9 +454,7 @@
         }
         
         // compute width
-        CGFloat width = [self.delegate collectionView:self.collectionView
-                                          tableLayout:self
-                           widthForRowHeaderInSection:indexPath.section];
+        CGFloat width = [self widthForRowHeaderInSection:indexPath.section];
 
         // compute height
         CGFloat height = [self.delegate collectionView:self.collectionView

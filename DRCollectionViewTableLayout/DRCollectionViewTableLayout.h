@@ -60,6 +60,8 @@ static NSString * const DRCollectionViewTableLayoutSupplementaryViewRowHeader = 
  */
 - (CGFloat)collectionView:(UICollectionView *)collectionView tableLayout:(DRCollectionViewTableLayout *)collectionViewLayout heightForRow:(NSUInteger)row inSection:(NSUInteger)section;
 
+@optional
+
 /**
  *  Return width for row header in given section
  *

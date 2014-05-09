@@ -123,30 +123,46 @@
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView tableLayout:(DRCollectionViewTableLayout *)collectionViewLayout widthForRowHeaderInSection:(NSUInteger)section
 {
-    return [self.delegate collectionViewTableLayoutManager:self
-                                            collectionView:collectionView
-                                widthForRowHeaderInSection:section];
+    if ([self.delegate respondsToSelector:@selector(collectionViewTableLayoutManager:collectionView:widthForRowHeaderInSection:)]) {
+        return [self.delegate collectionViewTableLayoutManager:self
+                                                collectionView:collectionView
+                                    widthForRowHeaderInSection:section];
+    }
+    
+    return 0.f;
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView tableLayout:(DRCollectionViewTableLayout *)collectionViewLayout heightForColumnHeaderInSection:(NSUInteger)section
 {
-    return [self.delegate collectionViewTableLayoutManager:self
-                                            collectionView:collectionView
-                            heightForColumnHeaderInSection:section];
+    if ([self.delegate respondsToSelector:@selector(collectionViewTableLayoutManager:collectionView:heightForColumnHeaderInSection:)]) {
+        return [self.delegate collectionViewTableLayoutManager:self
+                                                collectionView:collectionView
+                                heightForColumnHeaderInSection:section];
+    }
+    
+    return 0.f;
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView tableLayout:(DRCollectionViewTableLayout *)collectionViewLayout stickyRowHeadersForSection:(NSUInteger)section
 {
-    return [self.delegate collectionViewTableLayoutManager:self
-                                            collectionView:collectionView
-                                stickyRowHeadersForSection:section];
+    if ([self.delegate respondsToSelector:@selector(collectionViewTableLayoutManager:collectionView:stickyRowHeadersForSection:)]) {
+        return [self.delegate collectionViewTableLayoutManager:self
+                                                collectionView:collectionView
+                                    stickyRowHeadersForSection:section];
+    }
+    
+    return NO;
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView tableLayout:(DRCollectionViewTableLayout *)collectionViewLayout stickyColumnHeadersForSection:(NSUInteger)section
 {
-    return [self.delegate collectionViewTableLayoutManager:self
-                                            collectionView:collectionView
-                             stickyColumnHeadersForSection:section];
+    if ([self.delegate respondsToSelector:@selector(collectionViewTableLayoutManager:collectionView:stickyColumnHeadersForSection:)]) {
+        return [self.delegate collectionViewTableLayoutManager:self
+                                                collectionView:collectionView
+                                 stickyColumnHeadersForSection:section];
+    }
+    
+    return NO;
 }
 
 @end

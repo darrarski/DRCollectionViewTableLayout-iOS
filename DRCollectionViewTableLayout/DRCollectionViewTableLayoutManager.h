@@ -100,6 +100,34 @@
                                                     column:(NSUInteger)column
                                                  indexPath:(NSIndexPath *)indexPath;
 
+@optional
+
+/**
+ *  Return width for row headers. Return 0 to disable row headers.
+ *
+ *  @param manager        Collection View Table Layout Manager
+ *  @param collectionView Collection View
+ *  @param section        Collection View section
+ *
+ *  @return Row headers width
+ */
+- (CGFloat)collectionViewTableLayoutManager:(DRCollectionViewTableLayoutManager *)manager
+                             collectionView:(UICollectionView *)collectionView
+                 widthForRowHeaderInSection:(NSUInteger)section;
+
+/**
+ *  Return height for column headers. Return 0 to disable column headers.
+ *
+ *  @param manager        Collection View Table Layout Manager
+ *  @param collectionView Collection View
+ *  @param section        Collection View section
+ *
+ *  @return Column headers height
+ */
+- (CGFloat)collectionViewTableLayoutManager:(DRCollectionViewTableLayoutManager *)manager
+                             collectionView:(UICollectionView *)collectionView
+             heightForColumnHeaderInSection:(NSUInteger)section;
+
 /**
  *  Return view for column header
  *
@@ -129,32 +157,6 @@
                                                 collectionView:(UICollectionView *)collectionView
                                               headerViewForRow:(NSUInteger)row
                                                      indexPath:(NSIndexPath *)indexPath;
-
-/**
- *  Return width for row headers
- *
- *  @param manager        Collection View Table Layout Manager
- *  @param collectionView Collection View
- *  @param section        Collection View section
- *
- *  @return Row headers width
- */
-- (CGFloat)collectionViewTableLayoutManager:(DRCollectionViewTableLayoutManager *)manager
-                             collectionView:(UICollectionView *)collectionView
-                 widthForRowHeaderInSection:(NSUInteger)section;
-
-/**
- *  Return height for column headers
- *
- *  @param manager        Collection View Table Layout Manager
- *  @param collectionView Collection View
- *  @param section        Collection View section
- *
- *  @return Column headers height
- */
-- (CGFloat)collectionViewTableLayoutManager:(DRCollectionViewTableLayoutManager *)manager
-                             collectionView:(UICollectionView *)collectionView
-             heightForColumnHeaderInSection:(NSUInteger)section;
 
 /**
  *  Return YES if row headers in given section should stick to left edge
