@@ -96,19 +96,36 @@
     [super invalidateLayoutWithContext:context];
     
     if (![(DRCollectionViewTableLayoutInvalidationContext *)context keepCellsLayoutAttributes]) {
-        self.layoutAttributesForCells = nil;
+        if (_layoutAttributesForCells) {
+            _layoutAttributesForCells = nil;
+        }
     }
     
     if (![(DRCollectionViewTableLayoutInvalidationContext *)context keepSupplementaryViewsLayoutAttributes]) {
-        self.layoutAttributesForSupplementaryViews = nil;
+        if (_layoutAttributesForSupplementaryViews) {
+            _layoutAttributesForSupplementaryViews = nil;
+        }
     }
 }
 
 - (UICollectionViewLayoutInvalidationContext *)invalidationContextForBoundsChange:(CGRect)newBounds
 {
     DRCollectionViewTableLayoutInvalidationContext *context = (DRCollectionViewTableLayoutInvalidationContext *)[super invalidationContextForBoundsChange:newBounds];
+    
+    NSUInteger sectionsCount = [self.collectionView.dataSource numberOfSectionsInCollectionView:self.collectionView];
+    BOOL stickyColumnHeaders = NO;
+    BOOL stickyRowHeaders = NO;
+    for (NSUInteger sectionIdx = 0; sectionIdx < sectionsCount; sectionIdx++) {
+        stickyColumnHeaders = [self.delegate collectionView:self.collectionView tableLayout:self stickyColumnHeadersForSection:sectionIdx];
+        stickyRowHeaders = [self.delegate collectionView:self.collectionView tableLayout:self stickyRowHeadersForSection:sectionIdx];
+        if (stickyColumnHeaders || stickyRowHeaders) {
+            break;
+        }
+    }
+    
     context.keepCellsLayoutAttributes = YES;
-    context.keepSupplementaryViewsLayoutAttributes = NO;
+    context.keepSupplementaryViewsLayoutAttributes = !(stickyColumnHeaders || stickyRowHeaders);
+    
     return context;
 }
 
@@ -134,48 +151,52 @@
 
 - (NSArray *)layoutAttributesForCells
 {
-    if (!_layoutAttributesForCells) {
-        NSMutableArray *layoutAttributes = [NSMutableArray new];
-        NSUInteger numberOfSections = [self.collectionView.dataSource numberOfSectionsInCollectionView:self.collectionView];
-        for (NSUInteger sectionIdx = 0; sectionIdx < numberOfSections; sectionIdx++) {
-            NSUInteger numberOfItemsInSection = [self.collectionView.dataSource collectionView:self.collectionView
-                                                                        numberOfItemsInSection:sectionIdx];
-            for (NSUInteger itemIdx = 0; itemIdx < numberOfItemsInSection; itemIdx++) {
-                [layoutAttributes addObject:[self layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:itemIdx
-                                                                                                         inSection:sectionIdx]]];
+    @synchronized(self) {
+        if (!_layoutAttributesForCells) {
+            NSMutableArray *layoutAttributes = [NSMutableArray new];
+            NSUInteger numberOfSections = [self.collectionView.dataSource numberOfSectionsInCollectionView:self.collectionView];
+            for (NSUInteger sectionIdx = 0; sectionIdx < numberOfSections; sectionIdx++) {
+                NSUInteger numberOfItemsInSection = [self.collectionView.dataSource collectionView:self.collectionView
+                                                                            numberOfItemsInSection:sectionIdx];
+                for (NSUInteger itemIdx = 0; itemIdx < numberOfItemsInSection; itemIdx++) {
+                    [layoutAttributes addObject:[self layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:itemIdx
+                                                                                                             inSection:sectionIdx]]];
+                }
             }
+            _layoutAttributesForCells = [NSArray arrayWithArray:layoutAttributes];
         }
-        _layoutAttributesForCells = [NSArray arrayWithArray:layoutAttributes];
+        return _layoutAttributesForCells;
     }
-    return _layoutAttributesForCells;
 }
 
 - (NSArray *)layoutAttributesForSupplementaryViews
 {
-    if (!_layoutAttributesForSupplementaryViews) {
-        NSMutableArray *layoutAttributes = [NSMutableArray new];
-        NSUInteger sectionsCount = [self.collectionView.dataSource numberOfSectionsInCollectionView:self.collectionView];
-        for (NSUInteger sectionIdx = 0; sectionIdx < sectionsCount; sectionIdx++) {
-            NSUInteger columnsCount = [self.delegate collectionView:self.collectionView
-                                                        tableLayout:self
-                                           numberOfColumnsInSection:sectionIdx];
-            for (NSUInteger columnIdx = 0; columnIdx < columnsCount; columnIdx++) {
-                [layoutAttributes addObject:[self layoutAttributesForSupplementaryViewOfKind:DRCollectionViewTableLayoutSupplementaryViewColumnHeader
-                                                                                 atIndexPath:[NSIndexPath indexPathForItem:columnIdx
-                                                                                                                 inSection:sectionIdx]]];
+    @synchronized(self) {
+        if (!_layoutAttributesForSupplementaryViews) {
+            NSMutableArray *layoutAttributes = [NSMutableArray new];
+            NSUInteger sectionsCount = [self.collectionView.dataSource numberOfSectionsInCollectionView:self.collectionView];
+            for (NSUInteger sectionIdx = 0; sectionIdx < sectionsCount; sectionIdx++) {
+                NSUInteger columnsCount = [self.delegate collectionView:self.collectionView
+                                                            tableLayout:self
+                                               numberOfColumnsInSection:sectionIdx];
+                for (NSUInteger columnIdx = 0; columnIdx < columnsCount; columnIdx++) {
+                    [layoutAttributes addObject:[self layoutAttributesForSupplementaryViewOfKind:DRCollectionViewTableLayoutSupplementaryViewColumnHeader
+                                                                                     atIndexPath:[NSIndexPath indexPathForItem:columnIdx
+                                                                                                                     inSection:sectionIdx]]];
+                }
+                NSUInteger itemsCount = [self.collectionView.dataSource collectionView:self.collectionView
+                                                                numberOfItemsInSection:sectionIdx];
+                NSUInteger rowsCount = ceilf((float)itemsCount / (float)columnsCount);
+                for (NSUInteger rowIdx = 0; rowIdx < rowsCount; rowIdx++) {
+                    [layoutAttributes addObject:[self layoutAttributesForSupplementaryViewOfKind:DRCollectionViewTableLayoutSupplementaryViewRowHeader
+                                                                                     atIndexPath:[NSIndexPath indexPathForItem:columnsCount + rowIdx
+                                                                                                                     inSection:sectionIdx]]];
+                }
             }
-            NSUInteger itemsCount = [self.collectionView.dataSource collectionView:self.collectionView
-                                                            numberOfItemsInSection:sectionIdx];
-            NSUInteger rowsCount = ceilf((float)itemsCount / (float)columnsCount);
-            for (NSUInteger rowIdx = 0; rowIdx < rowsCount; rowIdx++) {
-                [layoutAttributes addObject:[self layoutAttributesForSupplementaryViewOfKind:DRCollectionViewTableLayoutSupplementaryViewRowHeader
-                                                                                 atIndexPath:[NSIndexPath indexPathForItem:columnsCount + rowIdx
-                                                                                                                 inSection:sectionIdx]]];
-            }
+            _layoutAttributesForSupplementaryViews = [NSArray arrayWithArray:layoutAttributes];
         }
-        _layoutAttributesForSupplementaryViews = [NSArray arrayWithArray:layoutAttributes];
+        return _layoutAttributesForSupplementaryViews;
     }
-    return _layoutAttributesForSupplementaryViews;
 }
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect
