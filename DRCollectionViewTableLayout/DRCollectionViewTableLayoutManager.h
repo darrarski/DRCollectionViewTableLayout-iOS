@@ -100,6 +100,62 @@
                                                     column:(NSUInteger)column
                                                  indexPath:(NSIndexPath *)indexPath;
 
+/**
+ *  Return view for column header
+ *
+ *  @param manager        Collection View Table Layout Manager
+ *  @param collectionView Collection View
+ *  @param column         Layout's column
+ *  @param indexPath      Collection View Supplementary View index path
+ *
+ *  @return Collection Reusable View
+ */
+- (UICollectionReusableView *)collectionViewTableLayoutManager:(DRCollectionViewTableLayoutManager *)manager
+                                                collectionView:(UICollectionView *)collectionView
+                                           headerViewForColumn:(NSUInteger)column
+                                                     indexPath:(NSIndexPath *)indexPath;
+
+/**
+ *  Return view for row header
+ *
+ *  @param manager        Collection View Table Layout Manager
+ *  @param collectionView Collection View
+ *  @param row            Layout's row
+ *  @param indexPath      Collection View Supplementary View index path
+ *
+ *  @return Collection Reusable View
+ */
+- (UICollectionReusableView *)collectionViewTableLayoutManager:(DRCollectionViewTableLayoutManager *)manager
+                                                collectionView:(UICollectionView *)collectionView
+                                              headerViewForRow:(NSUInteger)row
+                                                     indexPath:(NSIndexPath *)indexPath;
+
+/**
+ *  Return width for row headers
+ *
+ *  @param manager        Collection View Table Layout Manager
+ *  @param collectionView Collection View
+ *  @param section        Collection View section
+ *
+ *  @return Row headers width
+ */
+- (CGFloat)collectionViewTableLayoutManager:(DRCollectionViewTableLayoutManager *)manager
+                             collectionView:(UICollectionView *)collectionView
+                 widthForRowHeaderInSection:(NSUInteger)section;
+
+/**
+ *  Return height for column headers
+ *
+ *  @param manager        Collection View Table Layout Manager
+ *  @param collectionView Collection View
+ *  @param section        Collection View section
+ *
+ *  @return Column headers height
+ */
+- (CGFloat)collectionViewTableLayoutManager:(DRCollectionViewTableLayoutManager *)manager
+                             collectionView:(UICollectionView *)collectionView
+             heightForColumnHeaderInSection:(NSUInteger)section;
+
 @end
 
 /**

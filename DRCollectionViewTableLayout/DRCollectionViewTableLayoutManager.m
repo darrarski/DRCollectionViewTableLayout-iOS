@@ -52,6 +52,50 @@
                                                  indexPath:indexPath];
 }
 
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    if ([kind isEqualToString:DRCollectionViewTableLayoutSupplementaryViewColumnHeader]) {
+        
+        #ifdef DEBUG
+        
+            SEL selector = @selector(collectionViewTableLayoutManager:collectionView:headerViewForColumn:indexPath:);
+            NSAssert([self.delegate respondsToSelector:selector],
+                     @"DRCollectionViewTableLayoutManagerDelegate should respond to selector %@", NSStringFromSelector(selector));
+            
+            NSAssert([collectionView.collectionViewLayout isKindOfClass:[DRCollectionViewTableLayout class]],
+                     @"DRCollectionViewTableLayoutManagerDelegate can be used only with collection views with DRCollectionViewTableLayout layout");
+        
+        #endif
+        
+        NSUInteger column = [(DRCollectionViewTableLayout *)collectionView.collectionViewLayout columnNumberForHeaderIndexPath:indexPath];
+        return [self.delegate collectionViewTableLayoutManager:self
+                                                collectionView:collectionView
+                                           headerViewForColumn:column
+                                                     indexPath:indexPath];
+    }
+    else if ([kind isEqualToString:DRCollectionViewTableLayoutSupplementaryViewRowHeader]) {
+        
+        #ifdef DEBUG
+                
+            SEL selector = @selector(collectionViewTableLayoutManager:collectionView:headerViewForRow:indexPath:);
+            NSAssert([self.delegate respondsToSelector:selector],
+                     @"DRCollectionViewTableLayoutManagerDelegate should respond to selector %@", NSStringFromSelector(selector));
+            
+            NSAssert([collectionView.collectionViewLayout isKindOfClass:[DRCollectionViewTableLayout class]],
+                     @"DRCollectionViewTableLayoutManagerDelegate can be used only with collection views with DRCollectionViewTableLayout layout");
+                
+        #endif
+        
+        NSUInteger row = [(DRCollectionViewTableLayout *)collectionView.collectionViewLayout rowNumberForHeaderIndexPath:indexPath];
+        return [self.delegate collectionViewTableLayoutManager:self
+                                                collectionView:collectionView
+                                              headerViewForRow:row
+                                                     indexPath:indexPath];
+    }
+    
+    return nil;
+}
+
 #pragma mark - DRCollectionViewTableLayoutDelegate
 
 - (NSUInteger)collectionView:(UICollectionView *)collectionView tableLayout:(DRCollectionViewTableLayout *)collectionViewLayout numberOfColumnsInSection:(NSUInteger)section
@@ -75,6 +119,20 @@
                                             collectionView:collectionView
                                               heightForRow:row
                                                  inSection:section];
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView tableLayout:(DRCollectionViewTableLayout *)collectionViewLayout widthForRowHeaderInSection:(NSUInteger)section
+{
+    return [self.delegate collectionViewTableLayoutManager:self
+                                            collectionView:collectionView
+                                widthForRowHeaderInSection:section];
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView tableLayout:(DRCollectionViewTableLayout *)collectionViewLayout heightForColumnHeaderInSection:(NSUInteger)section
+{
+    return [self.delegate collectionViewTableLayoutManager:self
+                                            collectionView:collectionView
+                            heightForColumnHeaderInSection:section];
 }
 
 @end

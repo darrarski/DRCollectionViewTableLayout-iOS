@@ -11,6 +11,7 @@
 #import "DRCollectionViewTableLayoutManager.h"
 
 static NSString * const CollectionViewCellIdentifier = @"Cell";
+static NSString * const CollectionViewHeaderIdentifier = @"Header";
 
 @interface DRViewController () <DRCollectionViewTableLayoutManagerDelegate>
 
@@ -25,7 +26,17 @@ static NSString * const CollectionViewCellIdentifier = @"Cell";
 {
     [super viewDidLoad];
     
-    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:CollectionViewCellIdentifier];
+    [self.collectionView registerClass:[UICollectionReusableView class]
+            forSupplementaryViewOfKind:DRCollectionViewTableLayoutSupplementaryViewColumnHeader
+                   withReuseIdentifier:CollectionViewHeaderIdentifier];
+    
+    [self.collectionView registerClass:[UICollectionReusableView class]
+            forSupplementaryViewOfKind:DRCollectionViewTableLayoutSupplementaryViewRowHeader
+                   withReuseIdentifier:CollectionViewHeaderIdentifier];
+    
+    [self.collectionView registerClass:[UICollectionViewCell class]
+            forCellWithReuseIdentifier:CollectionViewCellIdentifier];
+    
     DRCollectionViewTableLayout *collectionViewLayout = [[DRCollectionViewTableLayout alloc] initWithDelegate:self.collectionManager];
     collectionViewLayout.horizontalSpacing = 5.f;
     collectionViewLayout.verticalSpacing = 5.f;
@@ -55,10 +66,10 @@ static NSString * const CollectionViewCellIdentifier = @"Cell";
                          numberOfRowsInSection:(NSUInteger)section
 {
     if (section == 0) {
-        return 5;
+        return 10;
     }
     else if (section == 1) {
-        return 4;
+        return 10;
     }
     
     return 0;
@@ -72,7 +83,7 @@ static NSString * const CollectionViewCellIdentifier = @"Cell";
         return 5;
     }
     else if (section == 1) {
-        return 4;
+        return 5;
     }
     
     return 0;
@@ -101,6 +112,34 @@ static NSString * const CollectionViewCellIdentifier = @"Cell";
     return 50.f + row * 10.f;
 }
 
+- (CGFloat)collectionViewTableLayoutManager:(DRCollectionViewTableLayoutManager *)manager
+                             collectionView:(UICollectionView *)collectionView
+                 widthForRowHeaderInSection:(NSUInteger)section
+{
+    if (section == 0) {
+        return 80.f;
+    }
+    else if (section == 1) {
+        return 60.f;
+    }
+    
+    return 0.f;
+}
+
+- (CGFloat)collectionViewTableLayoutManager:(DRCollectionViewTableLayoutManager *)manager
+                             collectionView:(UICollectionView *)collectionView
+             heightForColumnHeaderInSection:(NSUInteger)section
+{
+    if (section == 0) {
+        return 30.f;
+    }
+    else if (section == 1) {
+        return 20.f;
+    }
+    
+    return 0.f;
+}
+
 - (UICollectionViewCell *)collectionViewTableLayoutManager:(DRCollectionViewTableLayoutManager *)manager
                                             collectionView:(UICollectionView *)collectionView
                                                 cellForRow:(NSUInteger)row
@@ -124,6 +163,7 @@ static NSString * const CollectionViewCellIdentifier = @"Cell";
     
     if (!label) {
         label = [[UILabel alloc] initWithFrame:cell.bounds];
+        label.font = [UIFont systemFontOfSize:10.f];
         label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         label.textAlignment = NSTextAlignmentCenter;
         [cell.contentView addSubview:label];
@@ -132,6 +172,64 @@ static NSString * const CollectionViewCellIdentifier = @"Cell";
 	label.text = [NSString stringWithFormat:@"%ld:%ld / %ld:%ld", (long)indexPath.section,  (long)indexPath.row, (long)row, (long)column];
 	
 	return cell;
+}
+
+- (UICollectionReusableView *)collectionViewTableLayoutManager:(DRCollectionViewTableLayoutManager *)manager
+                                                collectionView:(UICollectionView *)collectionView
+                                           headerViewForColumn:(NSUInteger)column
+                                                     indexPath:(NSIndexPath *)indexPath;
+{
+    UICollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:DRCollectionViewTableLayoutSupplementaryViewColumnHeader
+                                                                        withReuseIdentifier:CollectionViewHeaderIdentifier
+                                                                               forIndexPath:indexPath];
+    view.backgroundColor = [UIColor grayColor];
+    view.layer.borderColor = [[UIColor blackColor] CGColor];
+    view.layer.borderWidth = 1.f;
+    
+    UILabel *label = [[[view subviews] filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(UIView *subview, NSDictionary *bindings) {
+        return ([subview isKindOfClass:[UILabel class]]);
+    }]] firstObject];
+    
+    if (!label) {
+        label = [[UILabel alloc] initWithFrame:view.bounds];
+        label.font = [UIFont systemFontOfSize:10.f];
+        label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        label.textAlignment = NSTextAlignmentCenter;
+        [view addSubview:label];
+    }
+    
+    label.text = [NSString stringWithFormat:@"C %ld:%ld", (long)indexPath.section,  (long)column];
+    
+    return view;
+}
+
+- (UICollectionReusableView *)collectionViewTableLayoutManager:(DRCollectionViewTableLayoutManager *)manager
+                                                collectionView:(UICollectionView *)collectionView
+                                              headerViewForRow:(NSUInteger)row
+                                                     indexPath:(NSIndexPath *)indexPath
+{
+    UICollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:DRCollectionViewTableLayoutSupplementaryViewRowHeader
+                                                                        withReuseIdentifier:CollectionViewHeaderIdentifier
+                                                                               forIndexPath:indexPath];
+    view.backgroundColor = [UIColor grayColor];
+    view.layer.borderColor = [[UIColor blackColor] CGColor];
+    view.layer.borderWidth = 1.f;
+    
+    UILabel *label = [[[view subviews] filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(UIView *subview, NSDictionary *bindings) {
+        return ([subview isKindOfClass:[UILabel class]]);
+    }]] firstObject];
+    
+    if (!label) {
+        label = [[UILabel alloc] initWithFrame:view.bounds];
+        label.font = [UIFont systemFontOfSize:10.f];
+        label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        label.textAlignment = NSTextAlignmentCenter;
+        [view addSubview:label];
+    }
+    
+    label.text = [NSString stringWithFormat:@"R %ld:%ld", (long)indexPath.section,  (long)row];
+    
+    return view;
 }
 
 @end

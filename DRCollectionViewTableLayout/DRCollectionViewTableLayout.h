@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ *  Supplementary View kind for column headers
+ */
+static NSString * const DRCollectionViewTableLayoutSupplementaryViewColumnHeader = @"DRCollectionViewTableLayoutSupplementaryViewColumnHeader";
+
+/**
+ *  Supplementary View kind for row headers
+ */
+static NSString * const DRCollectionViewTableLayoutSupplementaryViewRowHeader = @"DRCollectionViewTableLayoutSupplementaryViewRowHeader";
+
 @class DRCollectionViewTableLayout;
 
 /**
@@ -49,6 +59,28 @@
  *  @return Row height
  */
 - (CGFloat)collectionView:(UICollectionView *)collectionView tableLayout:(DRCollectionViewTableLayout *)collectionViewLayout heightForRow:(NSUInteger)row inSection:(NSUInteger)section;
+
+/**
+ *  Return width for row header in given section
+ *
+ *  @param collectionView       Collection View
+ *  @param collectionViewLayout Collection View Layout
+ *  @param section              Section index
+ *
+ *  @return Row header width
+ */
+- (CGFloat)collectionView:(UICollectionView *)collectionView tableLayout:(DRCollectionViewTableLayout *)collectionViewLayout widthForRowHeaderInSection:(NSUInteger)section;
+
+/**
+ *  Return height for column header in given section
+ *
+ *  @param collectionView       Collection View
+ *  @param collectionViewLayout Collection View Layout
+ *  @param section              Section index
+ *
+ *  @return Column header height
+ */
+- (CGFloat)collectionView:(UICollectionView *)collectionView tableLayout:(DRCollectionViewTableLayout *)collectionViewLayout heightForColumnHeaderInSection:(NSUInteger)section;
 
 @end
 
@@ -93,5 +125,28 @@
  *  @return Layout's row index
  */
 - (NSUInteger)rowNumberForIndexPath:(NSIndexPath *)indexPath;
+
+/**
+ *  Return column index for column header supplementary view at given index path
+ *
+ *  @param indexPath Index path
+ *
+ *  @return Column index
+ */
+- (NSUInteger)columnNumberForHeaderIndexPath:(NSIndexPath *)indexPath;
+
+/**
+ *  Return row index for row header supplementary view at given index path
+ *
+ *  @param indexPath Index path
+ *
+ *  @return Row index
+ */
+- (NSUInteger)rowNumberForHeaderIndexPath:(NSIndexPath *)indexPath;
+
+/**
+ *  Calling this method will invalidate whole layout
+ */
+- (void)invalidateTableLayout;
 
 @end
