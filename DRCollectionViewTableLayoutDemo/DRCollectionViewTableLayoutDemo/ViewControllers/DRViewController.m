@@ -44,7 +44,8 @@ static NSString * const CollectionViewCellIdentifier = @"Cell";
 
 #pragma mark - DRCOllectionViewTableLayoutManagerDelegate
 
-- (NSUInteger)collectionViewTableLayoutManager:(DRCollectionViewTableLayoutManager *)manager numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+- (NSUInteger)collectionViewTableLayoutManager:(DRCollectionViewTableLayoutManager *)manager
+              numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
     return 2;
 }
