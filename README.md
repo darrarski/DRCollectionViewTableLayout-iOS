@@ -22,11 +22,11 @@ You can install the library using CocoaPods. To do so, you will need to add one 
 
 For most recent or development version:
 
-	pod 'DRCollectionViewTableLayout', :git => 'https://github.com/darrarski/DRCollectionViewTableLayout'
+	pod 'DRCollectionViewTableLayout', :git => 'https://github.com/darrarski/DRCollectionViewTableLayout-iOS'
 
 For specific version:
 
-	pod 'DRCollectionViewTableLayout', :git => 'https://github.com/darrarski/DRCollectionViewTableLayout', :branch => 'VERSION_BRANCH'
+	pod 'DRCollectionViewTableLayout', :git => 'https://github.com/darrarski/DRCollectionViewTableLayout-iOS', :branch => 'VERSION_BRANCH'
 
 Where `VERSION_BRANCH` you should put the branch name for given version (ex. "v1"). It is recommended to set version branch explicity, as backward compatibility between those branches is not warranted. Master branch always contains the most recent version.
 
