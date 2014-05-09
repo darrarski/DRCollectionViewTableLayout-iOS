@@ -42,6 +42,7 @@ static NSString * const CollectionViewHeaderIdentifier = @"Header";
     collectionViewLayout.verticalSpacing = 5.f;
     self.collectionView.collectionViewLayout = collectionViewLayout;
     self.collectionView.dataSource = self.collectionManager;
+    self.collectionView.delegate = self.collectionManager;
 }
 
 - (DRCollectionViewTableLayoutManager *)collectionManager
@@ -240,6 +241,11 @@ static NSString * const CollectionViewHeaderIdentifier = @"Header";
 - (BOOL)collectionViewTableLayoutManager:(DRCollectionViewTableLayoutManager *)manager collectionView:(UICollectionView *)collectionView stickyRowHeadersForSection:(NSUInteger)section
 {
     return YES;
+}
+
+- (void)collectionViewTableLayoutManager:(DRCollectionViewTableLayoutManager *)manager collectionView:(UICollectionView *)collectionView didSelectCellAtRow:(NSUInteger)row column:(NSUInteger)column indexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"SELECTED: %ld.%ld / %ld.%ld", (long)indexPath.section, (long)indexPath.row, (long)row, (long)column);
 }
 
 @end

@@ -184,12 +184,27 @@
                           collectionView:(UICollectionView *)collectionView
            stickyColumnHeadersForSection:(NSUInteger)section;
 
+/**
+ *  Will be called when user selects cell
+ *
+ *  @param manager        Collection View Table Layout Manager
+ *  @param collectionView Collection View
+ *  @param row            Layout's row
+ *  @param column         Layout's column
+ *  @param indexPath      Collection View Cell index path
+ */
+- (void)collectionViewTableLayoutManager:(DRCollectionViewTableLayoutManager *)manager
+                          collectionView:(UICollectionView *)collectionView
+                      didSelectCellAtRow:(NSUInteger)row
+                                  column:(NSUInteger)column
+                               indexPath:(NSIndexPath *)indexPath;
+
 @end
 
 /**
  *  Collection View Table Layout Manager
  */
-@interface DRCollectionViewTableLayoutManager : NSObject <UICollectionViewDataSource, DRCollectionViewTableLayoutDelegate>
+@interface DRCollectionViewTableLayoutManager : NSObject <UICollectionViewDataSource, DRCollectionViewTableLayoutDelegate, UICollectionViewDelegate>
 
 /**
  *  Collection View Table Layout Manager Delegate

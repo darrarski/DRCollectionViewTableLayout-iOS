@@ -165,4 +165,28 @@
     return NO;
 }
 
+#pragma mark - UICollectionViewDelegate
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([self.delegate respondsToSelector:@selector(collectionViewTableLayoutManager:collectionView:didSelectCellAtRow:column:indexPath:)]) {
+        
+        #ifdef DEBUG
+        
+            NSAssert([collectionView.collectionViewLayout isKindOfClass:[DRCollectionViewTableLayout class]],
+                     @"DRCollectionViewTableLayoutManagerDelegate can be used only with collection views with DRCollectionViewTableLayout layout");
+        
+        #endif
+        
+        NSUInteger row = [(DRCollectionViewTableLayout *)collectionView.collectionViewLayout rowNumberForIndexPath:indexPath];
+        NSUInteger column = [(DRCollectionViewTableLayout *)collectionView.collectionViewLayout columnNumberForIndexPath:indexPath];
+        
+        [self.delegate collectionViewTableLayoutManager:self
+                                         collectionView:collectionView
+                                     didSelectCellAtRow:row
+                                                 column:column
+                                              indexPath:indexPath];
+    }
+}
+
 @end
