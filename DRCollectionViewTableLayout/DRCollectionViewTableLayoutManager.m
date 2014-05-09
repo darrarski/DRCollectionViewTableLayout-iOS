@@ -53,7 +53,7 @@
 
 #pragma mark - DRCollectionViewTableLayoutDelegate
 
-- (NSUInteger)collectionView:(UICollectionView *)collectionView tableLayout:(DRCollectionViewTableLayout *)collectionViewLayout numberOfColumnsPerRowInSection:(NSUInteger)section
+- (NSUInteger)collectionView:(UICollectionView *)collectionView tableLayout:(DRCollectionViewTableLayout *)collectionViewLayout numberOfColumnsInSection:(NSUInteger)section
 {
     return [self.delegate collectionViewTableLayoutManager:self
                                             collectionView:collectionView

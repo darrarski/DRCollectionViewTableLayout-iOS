@@ -30,12 +30,12 @@
 
 - (NSUInteger)columnNumberForIndexPath:(NSIndexPath *)indexPath
 {
-	return (indexPath.row % [self.delegate collectionView:self.collectionView tableLayout:self numberOfColumnsPerRowInSection:indexPath.section]);
+	return (indexPath.row % [self.delegate collectionView:self.collectionView tableLayout:self numberOfColumnsInSection:indexPath.section]);
 }
 
 - (NSUInteger)rowNumberForIndexPath:(NSIndexPath *)indexPath
 {
-	return floorf((float)indexPath.row / (float)[self.delegate collectionView:self.collectionView tableLayout:self numberOfColumnsPerRowInSection:indexPath.section]);
+	return floorf((float)indexPath.row / (float)[self.delegate collectionView:self.collectionView tableLayout:self numberOfColumnsInSection:indexPath.section]);
 }
 
 #pragma mark - Layout methods
