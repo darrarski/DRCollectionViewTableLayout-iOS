@@ -3,7 +3,7 @@ DRCollectionViewTableLayout
 
 `UICollectionViewLayout` for displaying 2D tables, similar to those in spreadsheets. Library contains layout class and `DRCollectionViewTableLayoutManager` that acts as a proxy and allows to configure collection view, and propagate it with data in easy way. For example implementation, checkout attached demo project.
 
-Tested under iOS 7, should work on iOS 6 (check [reported issues](../../issues) if you are planning to support iOS 6). If you are looking for specific version of the library, checkout those branches:
+Tested under iOS 7, should work on iOS 6 (check [reported issues](../../issues?labels=iOS+6) if you are planning to support iOS 6). If you are looking for specific version of the library, checkout those branches:
 
 - For development version - [master branch](../../tree/master)
 - For v1.x.y - [branch v1](../../tree/v1)
