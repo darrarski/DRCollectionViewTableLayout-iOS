@@ -70,7 +70,7 @@ static NSString * const CollectionViewHeaderIdentifier = @"Header";
         return 10;
     }
     else if (section == 1) {
-        return 10;
+        return 5;
     }
     
     return 0;
@@ -81,7 +81,7 @@ static NSString * const CollectionViewHeaderIdentifier = @"Header";
                       numberOfColumnsInSection:(NSUInteger)section
 {
     if (section == 0) {
-        return 5;
+        return 10;
     }
     else if (section == 1) {
         return 5;
