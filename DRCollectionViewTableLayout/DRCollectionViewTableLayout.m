@@ -62,6 +62,18 @@
     }
 }
 
+- (BOOL)stickyColumnOrRowHeadersInAnySection
+{
+    NSUInteger sectionsCount = [self.collectionView.dataSource numberOfSectionsInCollectionView:self.collectionView];
+    for (NSUInteger sectionIdx = 0; sectionIdx < sectionsCount; sectionIdx++) {
+        if ([self stickyColumnHeadersInSection:sectionIdx] || [self stickyRowHeadersInSection:sectionIdx]) {
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
 - (CGFloat)widthForRowHeaderInSection:(NSUInteger)section
 {
     if ([self.delegate respondsToSelector:@selector(collectionView:tableLayout:widthForRowHeaderInSection:)]) {
@@ -150,19 +162,8 @@
 {
     DRCollectionViewTableLayoutInvalidationContext *context = (DRCollectionViewTableLayoutInvalidationContext *)[super invalidationContextForBoundsChange:newBounds];
     
-    NSUInteger sectionsCount = [self.collectionView.dataSource numberOfSectionsInCollectionView:self.collectionView];
-    BOOL stickyColumnHeaders = NO;
-    BOOL stickyRowHeaders = NO;
-    for (NSUInteger sectionIdx = 0; sectionIdx < sectionsCount; sectionIdx++) {
-        stickyColumnHeaders = [self stickyColumnHeadersInSection:sectionIdx];
-        stickyRowHeaders = [self stickyRowHeadersInSection:sectionIdx];
-        if (stickyColumnHeaders || stickyRowHeaders) {
-            break;
-        }
-    }
-    
     context.keepCellsLayoutAttributes = YES;
-    context.keepSupplementaryViewsLayoutAttributes = !(stickyColumnHeaders || stickyRowHeaders);
+    context.keepSupplementaryViewsLayoutAttributes = ![self stickyColumnOrRowHeadersInAnySection];
     
     return context;
 }
