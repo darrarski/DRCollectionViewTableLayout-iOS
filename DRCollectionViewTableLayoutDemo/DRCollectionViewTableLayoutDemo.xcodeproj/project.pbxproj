@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		31211389192007A100B13684 /* Storyboard-iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 31211388192007A100B13684 /* Storyboard-iPad.storyboard */; };
 		312667B2191C2FA9005AB8D3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 312667B1191C2FA9005AB8D3 /* Foundation.framework */; };
 		312667B4191C2FA9005AB8D3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 312667B3191C2FA9005AB8D3 /* CoreGraphics.framework */; };
 		312667B6191C2FA9005AB8D3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 312667B5191C2FA9005AB8D3 /* UIKit.framework */; };
@@ -15,12 +16,13 @@
 		312667C2191C2FA9005AB8D3 /* DRAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 312667C1191C2FA9005AB8D3 /* DRAppDelegate.m */; };
 		312667C4191C2FA9005AB8D3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 312667C3191C2FA9005AB8D3 /* Images.xcassets */; };
 		312667E5191C3108005AB8D3 /* DRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 312667E4191C3108005AB8D3 /* DRViewController.m */; };
-		312667E8191C3170005AB8D3 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 312667E7191C3170005AB8D3 /* Storyboard.storyboard */; };
+		312667E8191C3170005AB8D3 /* Storyboard-iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 312667E7191C3170005AB8D3 /* Storyboard-iPhone.storyboard */; };
 		312667EC191C3675005AB8D3 /* DRCollectionViewTableLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 312667EB191C3675005AB8D3 /* DRCollectionViewTableLayout.m */; };
 		312667EF191C4F83005AB8D3 /* DRCollectionViewTableLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 312667EE191C4F83005AB8D3 /* DRCollectionViewTableLayoutManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		31211388192007A100B13684 /* Storyboard-iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Storyboard-iPad.storyboard"; sourceTree = "<group>"; };
 		312667AE191C2FA9005AB8D3 /* DRCollectionViewTableLayoutDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DRCollectionViewTableLayoutDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		312667B1191C2FA9005AB8D3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		312667B3191C2FA9005AB8D3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -35,7 +37,7 @@
 		312667CA191C2FA9005AB8D3 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		312667E3191C3108005AB8D3 /* DRViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DRViewController.h; sourceTree = "<group>"; };
 		312667E4191C3108005AB8D3 /* DRViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DRViewController.m; sourceTree = "<group>"; };
-		312667E7191C3170005AB8D3 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
+		312667E7191C3170005AB8D3 /* Storyboard-iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Storyboard-iPhone.storyboard"; sourceTree = "<group>"; };
 		312667EA191C3675005AB8D3 /* DRCollectionViewTableLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DRCollectionViewTableLayout.h; sourceTree = "<group>"; };
 		312667EB191C3675005AB8D3 /* DRCollectionViewTableLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DRCollectionViewTableLayout.m; sourceTree = "<group>"; };
 		312667ED191C4F83005AB8D3 /* DRCollectionViewTableLayoutManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DRCollectionViewTableLayoutManager.h; sourceTree = "<group>"; };
@@ -137,7 +139,8 @@
 		312667E6191C3147005AB8D3 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
-				312667E7191C3170005AB8D3 /* Storyboard.storyboard */,
+				31211388192007A100B13684 /* Storyboard-iPad.storyboard */,
+				312667E7191C3170005AB8D3 /* Storyboard-iPhone.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -207,8 +210,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				312667BC191C2FA9005AB8D3 /* InfoPlist.strings in Resources */,
+				31211389192007A100B13684 /* Storyboard-iPad.storyboard in Resources */,
 				312667C4191C2FA9005AB8D3 /* Images.xcassets in Resources */,
-				312667E8191C3170005AB8D3 /* Storyboard.storyboard in Resources */,
+				312667E8191C3170005AB8D3 /* Storyboard-iPhone.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,6 +325,7 @@
 				INFOPLIST_FILE = "DRCollectionViewTableLayoutDemo/Supporting Files/DRCollectionViewTableLayoutDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -335,6 +340,7 @@
 				INFOPLIST_FILE = "DRCollectionViewTableLayoutDemo/Supporting Files/DRCollectionViewTableLayoutDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
