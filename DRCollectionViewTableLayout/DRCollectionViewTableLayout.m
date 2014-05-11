@@ -138,6 +138,15 @@
 
 - (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds
 {
+    /**
+     *  Workaround for floating (sticky) headers under iOS 6.
+     *  This is due to custom invalidation contexts are not available under iOS 6.
+     */
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1 &&
+        [self stickyColumnOrRowHeadersInAnySection]) {
+        _layoutAttributesForSupplementaryViews = nil;
+    }
+    
     return YES;
 }
 
