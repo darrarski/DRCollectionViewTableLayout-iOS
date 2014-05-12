@@ -123,10 +123,18 @@
 
 - (void)invalidateTableLayout
 {
-    DRCollectionViewTableLayoutInvalidationContext *context = (DRCollectionViewTableLayoutInvalidationContext *)[super invalidationContextForBoundsChange:self.collectionView.bounds];
-    context.keepCellsLayoutAttributes = NO;
-    context.keepSupplementaryViewsLayoutAttributes = NO;
-    [self invalidateLayoutWithContext:context];
+	if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+		_computedContentSize = CGSizeZero;
+		_layoutAttributesForCells = nil;
+		_layoutAttributesForSupplementaryViews = nil;
+		[super invalidateLayout];
+	}
+	else {
+		DRCollectionViewTableLayoutInvalidationContext *context = (DRCollectionViewTableLayoutInvalidationContext *)[super invalidationContextForBoundsChange:self.collectionView.bounds];
+		context.keepCellsLayoutAttributes = NO;
+		context.keepSupplementaryViewsLayoutAttributes = NO;
+		[self invalidateLayoutWithContext:context];
+	}
 }
 
 #pragma mark - Layout invalidation
@@ -153,8 +161,9 @@
 - (void)invalidateLayoutWithContext:(DRCollectionViewTableLayoutInvalidationContext *)context
 {
     [super invalidateLayoutWithContext:context];
-    
-    if (![(DRCollectionViewTableLayoutInvalidationContext *)context keepCellsLayoutAttributes]) {
+	
+	if (![(DRCollectionViewTableLayoutInvalidationContext *)context keepCellsLayoutAttributes]) {
+		_computedContentSize = CGSizeZero;
         if (_layoutAttributesForCells) {
             _layoutAttributesForCells = nil;
         }
