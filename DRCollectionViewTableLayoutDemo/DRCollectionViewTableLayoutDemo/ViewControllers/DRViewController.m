@@ -167,6 +167,7 @@ static NSString * const CollectionViewHeaderIdentifier = @"Header";
         label.font = [UIFont systemFontOfSize:10.f];
         label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         label.textAlignment = NSTextAlignmentCenter;
+		label.backgroundColor = [UIColor clearColor];
         [cell.contentView addSubview:label];
     }
     
@@ -196,6 +197,7 @@ static NSString * const CollectionViewHeaderIdentifier = @"Header";
         label.font = [UIFont systemFontOfSize:10.f];
         label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         label.textAlignment = NSTextAlignmentCenter;
+		label.backgroundColor = [UIColor clearColor];
         [view addSubview:label];
     }
     
@@ -225,6 +227,7 @@ static NSString * const CollectionViewHeaderIdentifier = @"Header";
         label.font = [UIFont systemFontOfSize:10.f];
         label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         label.textAlignment = NSTextAlignmentCenter;
+		label.backgroundColor = [UIColor clearColor];
         [view addSubview:label];
     }
     
