@@ -20,13 +20,15 @@ Demo project is configured to display a table with column and row headers. Each 
 
 You can install the library using CocoaPods. To do so, you will need to add one of the following lines to your Podfile:
 
-For most recent or development version:
+For stable release (recommended):
 
-	pod 'DRCollectionViewTableLayout', :git => 'https://github.com/darrarski/DRCollectionViewTableLayout-iOS'
+    pod 'DRCollectionViewTableLayout', '~> 1.0.2'
 
-For specific version:
+Which creates dependency for version `>= 1.0.2` and `< 1.1`
 
-	pod 'DRCollectionViewTableLayout', :git => 'https://github.com/darrarski/DRCollectionViewTableLayout-iOS', :branch => 'VERSION_BRANCH'
+For most recent or exact development version (not recommended on production):
+
+    pod 'DRCollectionViewTableLayout', :git => 'https://github.com/darrarski/DRCollectionViewTableLayout-iOS', :branch => 'VERSION_BRANCH'
 
 Where `VERSION_BRANCH` you should put the branch name for given version (ex. "v1"). It is recommended to set version branch explicity, as backward compatibility between those branches is not warranted. Master branch always contains the most recent version.
 
