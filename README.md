@@ -10,11 +10,11 @@ Tested under iOS 7, should work on iOS 6 (check [reported issues](../../issues?l
 
 Demo project is configured to display a table with column and row headers. Each cell has randomly generated color. Labels in cells contains `UICollectionView` indexPath for given cell, as well as layout's column and row number. Labels in headers contains `UICollectionView` section number, and layout's column/row number.
 
-![DRCollectionViewTableLayout screenshot 1](Screenshots/iOS%20Simulator%20Screen%20shot%2009%20May%202014%2016.52.02.png "DRCollectionViewTableLayout screenshot 1")
+![DRCollectionViewTableLayout screenshot 1](Screenshots/iOS_Simulator_Screen_shot_09_May_2014_16.52.02.png "DRCollectionViewTableLayout screenshot 1")
 
 `DRCollectionViewTableLayout` alows you to easily setup floating headers for columns as well as rows. Sticky headers behaviour is similar to `UITableView` headers.
 
-![DRCollectionViewTableLayout screenshot 2](Screenshots/iOS%20Simulator%20Screen%20shot%2009%20May%202014%2016.52.27.png "DRCollectionViewTableLayout screenshot 2")
+![DRCollectionViewTableLayout screenshot 2](Screenshots/iOS_Simulator_Screen_shot_09_May_2014_16.52.27.png "DRCollectionViewTableLayout screenshot 2")
 
 ## Installation
 
