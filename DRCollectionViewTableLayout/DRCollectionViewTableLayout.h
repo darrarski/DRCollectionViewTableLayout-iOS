@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+extern const NSInteger DRTopLeftColumnHeaderIndex;
+
 /**
  *  Supplementary View kind for column headers
  */
@@ -122,6 +124,16 @@ static NSString * const DRCollectionViewTableLayoutSupplementaryViewRowHeader = 
  *  Vertical spacing between cells
  */
 @property (nonatomic, assign) CGFloat verticalSpacing;
+
+/**
+ *  Vertical spacing between cells
+ */
+@property (nonatomic, assign) CGFloat verticalSectionSpacing;
+
+/**
+ *  Has top left supplementary column header view
+ */
+@property (nonatomic, assign) BOOL hasTopLeftColumnHeaderView;
 
 /**
  *  Initialize with delegate

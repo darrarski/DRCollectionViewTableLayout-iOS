@@ -8,6 +8,8 @@
 
 #import "DRCollectionViewTableLayout.h"
 
+const NSInteger DRTopLeftColumnHeaderIndex = -1;
+
 #pragma mark - DRCollectionViewTableLayoutInvalidationContext
 
 @interface DRCollectionViewTableLayoutInvalidationContext : UICollectionViewLayoutInvalidationContext
@@ -38,6 +40,7 @@
 {
     if (self = [super init]) {
         _delegate = delegate;
+        _verticalSectionSpacing = 50.f;
     }
     return self;
 }
@@ -239,7 +242,8 @@
                                                numberOfColumnsInSection:sectionIdx];
                 
                 
-                if ([self heightForColumnHeaderInSection:sectionIdx] > 0) {
+                BOOL hasColumnHeader = ([self heightForColumnHeaderInSection:sectionIdx] > 0);
+                if (hasColumnHeader) {
                     for (NSUInteger columnIdx = 0; columnIdx < columnsCount; columnIdx++) {
                         [layoutAttributes addObject:[self layoutAttributesForSupplementaryViewOfKind:DRCollectionViewTableLayoutSupplementaryViewColumnHeader
                                                                                          atIndexPath:[NSIndexPath indexPathForItem:columnIdx
@@ -247,7 +251,8 @@
                     }
                 }
                 
-                if ([self widthForRowHeaderInSection:sectionIdx] > 0) {
+                BOOL hasRowHeader = ([self widthForRowHeaderInSection:sectionIdx] > 0);
+                if (hasRowHeader) {
                     NSUInteger itemsCount = [self.collectionView.dataSource collectionView:self.collectionView
                                                                     numberOfItemsInSection:sectionIdx];
                     NSUInteger rowsCount = ceilf((float)itemsCount / (float)columnsCount);
@@ -256,6 +261,12 @@
                                                                                          atIndexPath:[NSIndexPath indexPathForItem:columnsCount + rowIdx
                                                                                                                          inSection:sectionIdx]]];
                     }
+                }
+                
+                if (hasColumnHeader && hasRowHeader && self.hasTopLeftColumnHeaderView) {
+                    [layoutAttributes addObject:[self layoutAttributesForSupplementaryViewOfKind:DRCollectionViewTableLayoutSupplementaryViewColumnHeader
+                                                                                     atIndexPath:[NSIndexPath indexPathForItem:DRTopLeftColumnHeaderIndex
+                                                                                                                     inSection:sectionIdx]]];
                 }
             }
             _layoutAttributesForSupplementaryViews = [NSArray arrayWithArray:layoutAttributes];
@@ -327,6 +338,7 @@
             y += self.verticalSpacing / 2.f;
         }
     }
+    y += (indexPath.section * self.verticalSectionSpacing);
 	
     // compute item width
     CGFloat width = [self.delegate collectionView:self.collectionView
@@ -361,31 +373,38 @@
     UICollectionViewLayoutAttributes *currentItemAttributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:kind withIndexPath:indexPath];
     
     if ([kind isEqualToString:DRCollectionViewTableLayoutSupplementaryViewColumnHeader]) {
-        
         // get header column index
         NSUInteger currentColumn = [self columnNumberForHeaderIndexPath:indexPath];
         
-        // compute width
-        CGFloat width = [self.delegate collectionView:self.collectionView
-                                          tableLayout:self
-                                       widthForColumn:indexPath.row
-                                            inSection:indexPath.section];
-        
         // compute height
         CGFloat height = [self heightForColumnHeaderInSection:indexPath.section];
+        CGFloat width;
         
-        // compute x position
         CGFloat x = 0;
-        CGFloat rowHeaderWidth = [self widthForRowHeaderInSection:indexPath.section];
-        if (rowHeaderWidth > 0) {
-            x += rowHeaderWidth + (self.horizontalSpacing / 2.f);
-        }
-        for (NSUInteger columnIdx = 0; columnIdx < currentColumn; columnIdx++) {
-            x += [self.delegate collectionView:self.collectionView
-                                   tableLayout:self
-                                widthForColumn:columnIdx
-                                     inSection:indexPath.section];
-            x += self.horizontalSpacing / 2.f;
+        if (indexPath.item == DRTopLeftColumnHeaderIndex) {
+            x = 0;
+            width = [self.delegate collectionView:self.collectionView
+                                      tableLayout:self
+                       widthForRowHeaderInSection:indexPath.section];
+        } else {
+            // compute x position
+            CGFloat rowHeaderWidth = [self widthForRowHeaderInSection:indexPath.section];
+            if (rowHeaderWidth > 0) {
+                x += rowHeaderWidth + (self.horizontalSpacing / 2.f);
+            }
+            for (NSUInteger columnIdx = 0; columnIdx < currentColumn; columnIdx++) {
+                x += [self.delegate collectionView:self.collectionView
+                                       tableLayout:self
+                                    widthForColumn:columnIdx
+                                         inSection:indexPath.section];
+                x += self.horizontalSpacing / 2.f;
+            }
+            
+            // compute width
+            width = [self.delegate collectionView:self.collectionView
+                                      tableLayout:self
+                                   widthForColumn:indexPath.row
+                                        inSection:indexPath.section];
         }
         
         // compute y position
@@ -405,6 +424,7 @@
                 y += self.verticalSpacing / 2.f;
             }
         }
+        y += (indexPath.section * self.verticalSectionSpacing);
         
         // stick column header to top edge
         if ([self stickyColumnHeadersInSection:indexPath.section]) {
@@ -426,9 +446,12 @@
                     maxY += self.verticalSpacing / 2.f;
                 }
             }
+            maxY += (indexPath.section * self.verticalSectionSpacing);
             maxY -= height + (self.verticalSpacing / 2.f);
-            if (y < self.collectionView.contentOffset.y) {
-                y = MIN(maxY, CGRectGetMinY(self.collectionView.bounds) + self.collectionView.contentInset.top);
+            
+            CGFloat stickyY = self.collectionView.contentOffset.y + self.collectionView.contentInset.top;
+            if (y < stickyY) {
+                y = MIN(maxY, stickyY);
             }
         }
         
@@ -443,7 +466,9 @@
         
         // stick header to left edge
         if ([self stickyRowHeadersInSection:indexPath.section]) {
-            x = CGRectGetMinX(self.collectionView.bounds) + self.collectionView.contentInset.left;
+            CGFloat stickyX = CGRectGetMinX(self.collectionView.bounds) + self.collectionView.contentInset.left;
+            if (x < stickyX)
+                x = stickyX;
         }
         
         // compute y position
@@ -471,6 +496,7 @@
                 y += self.verticalSpacing / 2.f;
             }
         }
+        y += (indexPath.section * self.verticalSectionSpacing);
         
         // compute width
         CGFloat width = [self widthForRowHeaderInSection:indexPath.section];
