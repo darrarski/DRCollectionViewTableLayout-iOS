@@ -19,15 +19,15 @@ You can install the library using CocoaPods. To do so, you will need to add one 
 
 For stable release (recommended):
 
-    pod 'DRCollectionViewTableLayout', '~> 1.0.4'
+    pod 'DRCollectionViewTableLayout', '~> 1.0.5'
 
-Which creates dependency for version `>= 1.0.4` and `< 1.1`
+Which creates dependency for version `>= 1.0.5` and `< 1.1`
 
 For most recent or exact development version (not recommended on production):
 
     pod 'DRCollectionViewTableLayout', :git => 'https://github.com/darrarski/DRCollectionViewTableLayout-iOS.git', :tag => 'VERSION_TAG'
     
-Where `VERSION_TAG` you should put tag name for given version (ex. "1.0.4"). It is recommended to set version explicity instead of using most recent version, as backward compatibility is not warranted.
+Where `VERSION_TAG` you should put tag name for given version (ex. "1.0.5"). It is recommended to set version explicity instead of using most recent version, as backward compatibility is not warranted.
 
 ## Usage
 
