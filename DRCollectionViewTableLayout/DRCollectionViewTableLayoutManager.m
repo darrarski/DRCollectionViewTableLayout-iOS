@@ -189,4 +189,39 @@
     }
 }
 
+
+- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSUInteger row = [(DRCollectionViewTableLayout *)collectionView.collectionViewLayout rowNumberForIndexPath:indexPath];
+    NSUInteger column = [(DRCollectionViewTableLayout *)collectionView.collectionViewLayout columnNumberForIndexPath:indexPath];
+    
+    SEL selector = @selector(collectionViewTableLayoutManager:collectionView:didDeselectCellAtRow:column:indexPath:);
+    
+    if ([self.delegate respondsToSelector:selector]) {
+    
+        [self.delegate collectionViewTableLayoutManager:self
+                                     collectionView:collectionView
+                               didDeselectCellAtRow:row
+                                             column:column
+                                          indexPath:indexPath];
+    }
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSUInteger row = [(DRCollectionViewTableLayout *)collectionView.collectionViewLayout rowNumberForIndexPath:indexPath];
+    NSUInteger column = [(DRCollectionViewTableLayout *)collectionView.collectionViewLayout columnNumberForIndexPath:indexPath];
+    
+    SEL selector = @selector(collectionViewTableLayoutManager:collectionView:shouldSelectItemAtRow:column:indexPath:);
+    
+    if ([self.delegate respondsToSelector:selector]) {
+        
+        return [self.delegate collectionViewTableLayoutManager:self
+                                                collectionView:collectionView
+                                         shouldSelectItemAtRow:row
+                                                        column:column
+                                                     indexPath:indexPath];
+    }
+    
+    return YES;
+}
+
 @end

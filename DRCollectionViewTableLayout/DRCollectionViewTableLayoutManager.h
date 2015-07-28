@@ -199,6 +199,36 @@
                                   column:(NSUInteger)column
                                indexPath:(NSIndexPath *)indexPath;
 
+/**
+ *  Will be called when user deselects cell
+ *
+ *  @param manager        Collection View Table Layout Manager
+ *  @param collectionView Collection View
+ *  @param row            Layout's row
+ *  @param column         Layout's column
+ *  @param indexPath      Collection View Cell index path
+ */
+- (void)collectionViewTableLayoutManager:(DRCollectionViewTableLayoutManager *)manager
+                          collectionView:(UICollectionView *)collectionView
+                    didDeselectCellAtRow:(NSUInteger)row
+                                  column:(NSUInteger)column
+                               indexPath:(NSIndexPath *)indexPath;
+
+/**
+ *  Will be called in order to decide if the cell has to be selected or not
+ *
+ *  @param manager        Collection View Table Layout Manager
+ *  @param collectionView Collection View
+ *  @param row            Layout's row
+ *  @param column         Layout's column
+ *  @param indexPath      Collection View Cell index path
+ */
+- (BOOL)collectionViewTableLayoutManager:(DRCollectionViewTableLayoutManager *)manager
+                          collectionView:(UICollectionView *)collectionView
+                   shouldSelectItemAtRow:(NSUInteger)row
+                                  column:(NSUInteger)column
+                               indexPath:(NSIndexPath *)indexPath;
+
 @end
 
 /**
