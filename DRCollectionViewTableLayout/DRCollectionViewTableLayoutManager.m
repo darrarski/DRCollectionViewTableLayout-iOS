@@ -210,7 +210,7 @@
     NSUInteger row = [(DRCollectionViewTableLayout *)collectionView.collectionViewLayout rowNumberForIndexPath:indexPath];
     NSUInteger column = [(DRCollectionViewTableLayout *)collectionView.collectionViewLayout columnNumberForIndexPath:indexPath];
     
-    SEL selector = @selector(collectionViewTableLayoutManager:collectionView:shouldSelectItemAtIndexPath:column:indexPath:);
+    SEL selector = @selector(collectionViewTableLayoutManager:collectionView:shouldSelectItemAtRow:column:indexPath:);
     
     if ([self.delegate respondsToSelector:selector]) {
         
